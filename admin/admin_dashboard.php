@@ -252,7 +252,7 @@ $stats['total_majors'] = $major_count_result->fetch_assoc()['total'];
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="index.php" target="_blank">
-                    <i class="fas fa-external-link-alt"></i> ເບິ່ງໜ້າເວັບໄຊ
+                    <i class="fas fa-external-link-alt"></i> ເບິ່ງໜ້າເວັບໄຊຕ໌
                 </a>
             </li>
         </ul>
@@ -367,9 +367,9 @@ $stats['total_majors'] = $major_count_result->fetch_assoc()['total'];
                             </li>
                             <li class="list-group-item">
                                 <span><i class="fas fa-link"></i> ລິ້ງກ໌ສຳລັບນັກສຶກສາ</span><br>
-                                <a href="index.php" target="_blank" class="small">
-                                    <?php echo 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/index.php'; ?>
-                                </a>
+                                <a href="../index.php" target="_blank" class="small">
+    http://localhost/academic_records/index.php
+</a>
                             </li>
                         </ul>
                     </div>

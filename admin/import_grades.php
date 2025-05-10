@@ -21,6 +21,7 @@ function checkStudentExists($conn, $student_id) {
     return $result->num_rows > 0;
 }
 
+
 // ฟังก์ชันสำหรับตรวจสอบว่ารายวิชามีอยู่ในระบบหรือไม่
 function checkSubjectExists($conn, $subject_code) {
     $query = "SELECT * FROM subjects WHERE subject_code = '$subject_code'";
@@ -205,40 +206,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-family: 'Noto Sans Lao', sans-serif;
         }
         
-        .sidebar {
+       .sidebar {
             position: fixed;
             top: 56px;
             left: 0;
             width: 250px;
             height: calc(100vh - 56px);
             padding: 20px;
-            background-color: #343a40;
+            background-color: #2c3e50;
             color: white;
             z-index: 100;
             overflow-y: auto;
         }
-        
         .sidebar .nav-link {
             color: rgba(255, 255, 255, 0.8);
             padding: 10px 15px;
             margin-bottom: 5px;
             border-radius: 5px;
+            transition: all 0.2s ease;
         }
-        
         .sidebar .nav-link:hover {
             background-color: rgba(255, 255, 255, 0.1);
             color: white;
         }
-        
         .sidebar .nav-link.active {
-            background-color: #007bff;
+            background-color: #3498db;
             color: white;
         }
-        
         .sidebar .nav-link i {
             margin-right: 10px;
         }
-        
+          .navbar {
+            background-color: #2c3e50;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand {
+            font-weight: 600;
+        }
         .main-content {
             margin-left: 250px;
             padding: 20px;
@@ -325,11 +329,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <!-- Navbar -->
+ <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="admin_dashboard.php">
-                Polytechnic College - ລະບົບຜູ້ດູແລ
+                <i class="fas fa-graduation-cap me-2"></i> ວິທະຍາໄລເຕັກນິກ - ລະບົບຜູ້ບໍລິຫານ
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -338,7 +342,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php">
-                            <i class="fas fa-sign-out-alt"></i> ອອກຈາກລະບົບ
+                            <i class="fas fa-sign-out-alt"></i> ອອກຈາກລະບົບ      
                         </a>
                     </li>
                 </ul>
@@ -347,63 +351,67 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </nav>
     
     <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="user-info">
-            <div class="user-avatar">
-                <i class="fas fa-user"></i>
-            </div>
-            <div>
-                <div class="user-name"><?php echo $_SESSION['username']; ?></div>
-                <div class="user-role"><?php echo ($_SESSION['role'] === 'admin') ? 'ຜູ້ດູແລລະບົບ' : 'ອາຈານ'; ?></div>
-            </div>
+<div class="sidebar">
+    <div class="user-info">
+        <div class="user-avatar">
+            <i class="fas fa-user"></i>
         </div>
-        
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link" href="admin_dashboard.php">
-                    <i class="fas fa-tachometer-alt"></i> ໜ້າຫຼັກ
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="admin_students.php">
-                    <i class="fas fa-user-graduate"></i> ຈັດການນັກສຶກສາ
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="admin_grades.php">
-                    <i class="fas fa-chart-line"></i> ຈັດການຜົນການຮຽນ
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="admin_subjects.php">
-                    <i class="fas fa-book"></i> ຈັດການລາຍວິຊາ
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="admin_majors.php">
-                    <i class="fas fa-graduation-cap"></i> ຈັດການສາຂາວິຊາ
-                </a>
-            </li>
-            <?php if ($_SESSION['role'] === 'admin'): ?>
-            <li class="nav-item">
-                <a class="nav-link" href="admin_users.php">
-                    <i class="fas fa-users-cog"></i> ຈັດການຜູ້ໃຊ້ລະບົບ
-                </a>
-            </li>
-            <?php endif; ?>
-            <li class="nav-item">
-                <a class="nav-link" href="admin_reports.php">
-                    <i class="fas fa-file-alt"></i> ລາຍງານ
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="index.php" target="_blank">
-                    <i class="fas fa-external-link-alt"></i> ເບິ່ງໜ້າເວັບໄຊຕ໌
-                </a>
-            </li>
-        </ul>
+        <div>
+            <div class="user-name"><?php echo $_SESSION['username']; ?></div>
+            <div class="user-role"><?php echo ($_SESSION['role'] === 'admin') ? 'ຜູ້ບໍລິຫານລະບົບ' : 'ອາຈານ'; ?></div>
+        </div>
     </div>
     
+    <?php
+    // ดึงชื่อไฟล์ปัจจุบัน
+    $current_file = basename($_SERVER['PHP_SELF']);
+    ?>
+    
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link <?php echo ($current_file == 'admin_dashboard.php') ? 'active' : ''; ?>" href="admin_dashboard.php">
+                <i class="fas fa-tachometer-alt"></i> ໜ້າຫຼັກ
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <?php echo ($current_file == 'admin_students.php' || $current_file == 'import_students.php') ? 'active' : ''; ?>" href="admin_students.php">
+                <i class="fas fa-user-graduate"></i> ຈັດການນັກສຶກສາ
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <?php echo ($current_file == 'admin_grades.php' || $current_file == 'import_grades.php') ? 'active' : ''; ?>" href="admin_grades.php">
+                <i class="fas fa-chart-line"></i> ຈັດການຜົນການຮຽນ
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <?php echo ($current_file == 'admin_subjects.php') ? 'active' : ''; ?>" href="admin_subjects.php">
+                <i class="fas fa-book"></i> ຈັດການລາຍວິຊາ
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <?php echo ($current_file == 'admin_majors.php') ? 'active' : ''; ?>" href="admin_majors.php">
+                <i class="fas fa-graduation-cap"></i> ຈັດການສາຂາວິຊາ
+            </a>
+        </li>
+        <?php if ($_SESSION['role'] === 'admin'): ?>
+        <li class="nav-item">
+            <a class="nav-link <?php echo ($current_file == 'admin_users.php') ? 'active' : ''; ?>" href="admin_users.php">
+                <i class="fas fa-users-cog"></i> ຈັດການຜູ້ໃຊ້ລະບົບ
+            </a>
+        </li>
+        <?php endif; ?>
+        <li class="nav-item">
+            <a class="nav-link <?php echo ($current_file == 'admin_reports.php') ? 'active' : ''; ?>" href="admin_reports.php">
+                <i class="fas fa-file-alt"></i> ລາຍງານ
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="../index.php" target="_blank">
+                <i class="fas fa-external-link-alt"></i> ເບິ່ງໜ້າເວັບໄຊຕ໌
+            </a>
+        </li>
+    </ul>
+</div>
     <!-- Main Content -->
     <div class="main-content">
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -467,7 +475,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     
                     <div class="d-flex">
                         <button type="submit" name="preview" value="1" class="btn btn-secondary me-2">
-                            <i class="fas fa-eye"></i> ດູຕົວຢ່າງ
+                            <i class="fas fa-eye"></i> ເບີ່ງຕົວຢ່າງ
                         </button>
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-file-import"></i> ນຳເຂົ້າຂໍ້ມູນ

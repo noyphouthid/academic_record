@@ -526,13 +526,19 @@ function getStatusText($status) {
     
     <!-- Main Content -->
     <div class="main-content">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2><i class="fas fa-user-graduate text-secondary me-2"></i> ຈັດການຂໍ້ມູນນັກສຶກສາ</h2>
-            <?php if ($action !== 'add' && $action !== 'edit'): ?>
-            <a href="admin_students.php?action=add" class="btn btn-primary">
-                <i class="fas fa-plus-circle me-1"></i> ເພີ່ມນັກສຶກສາໃໝ່
-            </a>
-            <?php endif; ?>
+       
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="fas fa-user-graduate"></i> ຈັດການນັກສຶກສາ</h2>
+    <?php if ($action !== 'add' && $action !== 'edit'): ?>
+    <div>
+        <a href="admin_students.php?action=add" class="btn btn-primary me-2">
+            <i class="fas fa-plus-circle"></i> ເພີ່ມນັກສຶກສາໃໝ່
+        </a>
+        <a href="import_students.php" class="btn btn-success">
+            <i class="fas fa-file-import"></i> ນຳເຂົ້າຂໍ້ມູນຈາກ CSV
+        </a>
+    </div>
+    <?php endif; ?>
         </div>
         
         <?php if (!empty($message)): ?>
