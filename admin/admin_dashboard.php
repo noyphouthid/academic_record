@@ -38,6 +38,7 @@ $stats['total_majors'] = $major_count_result->fetch_assoc()['total'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ລະບົບຜູ້ບໍລິຫານ - ວິທະຍາໄລເຕັກນິກ</title>
+    <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -180,83 +181,7 @@ $stats['total_majors'] = $major_count_result->fetch_assoc()['total'];
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="admin_dashboard.php">
-                <i class="fas fa-graduation-cap me-2"></i> ວິທະຍາໄລເຕັກນິກ - ລະບົບຜູ້ບໍລິຫານ
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="logout.php">
-                            <i class="fas fa-sign-out-alt"></i> ອອກຈາກລະບົບ
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="user-info">
-            <div class="user-avatar">
-                <i class="fas fa-user"></i>
-            </div>
-            <div>
-                <div class="user-name"><?php echo $_SESSION['username']; ?></div>
-                <div class="user-role"><?php echo ($_SESSION['role'] === 'admin') ? 'ຜູ້ບໍລິຫານລະບົບ' : 'ອາຈານ'; ?></div>
-            </div>
-        </div>
-        
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link active" href="admin_dashboard.php">
-                    <i class="fas fa-tachometer-alt"></i> ໜ້າຫຼັກ
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="admin_students.php">
-                    <i class="fas fa-user-graduate"></i> ຈັດການນັກສຶກສາ
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="admin_grades.php">
-                    <i class="fas fa-chart-line"></i> ຈັດການຜົນການຮຽນ
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="admin_subjects.php">
-                    <i class="fas fa-book"></i> ຈັດການລາຍວິຊາ
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="admin_majors.php">
-                    <i class="fas fa-graduation-cap"></i> ຈັດການສາຂາວິຊາ
-                </a>
-            </li>
-            <?php if ($_SESSION['role'] === 'admin'): ?>
-            <li class="nav-item">
-                <a class="nav-link" href="admin_users.php">
-                    <i class="fas fa-users-cog"></i> ຈັດການຜູ້ໃຊ້ລະບົບ
-                </a>
-            </li>
-            <?php endif; ?>
-            <li class="nav-item">
-                <a class="nav-link" href="admin_reports.php">
-                    <i class="fas fa-file-alt"></i> ລາຍງານ
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="index.php" target="_blank">
-                    <i class="fas fa-external-link-alt"></i> ເບິ່ງໜ້າເວັບໄຊຕ໌
-                </a>
-            </li>
-        </ul>
-    </div>
+   <?php include 'navbar.php'; ?>
     
     <!-- Main Content -->
     <div class="main-content">
