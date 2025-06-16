@@ -16,7 +16,7 @@ $index_path = (strpos($_SERVER['REQUEST_URI'], '/admin/') !== false) ? '../index
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="admin_dashboard.php">
-            <i class="fas fa-graduation-cap me-2"></i> ວິທະຍາໄລເຕັກນິກ - ລະບົບຜູ້ບໍລິຫານ
+            <i class="fas fa-graduation-cap me-2"></i> ວິທະຍາໄລ ເຕັກນິກ ສັບພະວິຊາ
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>

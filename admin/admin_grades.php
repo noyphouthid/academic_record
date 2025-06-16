@@ -42,11 +42,11 @@ function addGrade($conn, $student_id, $subject_code, $study_year, $semester, $gr
     $subject_exists = $conn->query($check_subject)->num_rows > 0;
     
     if (!$student_exists) {
-        return "ไม่พบข้อมูลนักศึกษารหัส $student_id ในระบบ";
+        return "ບໍ່ພົບຂ້ໍມູນນັກສຶກສາ $student_id ໃນລະບົບ";
     }
     
     if (!$subject_exists) {
-        return "ไม่พบข้อมูลรายวิชารหัส $subject_code ในระบบ";
+        return "ບໍ່ພົບຂໍ້ມູນລາຍວິຊາ $subject_code ໃນລະບົບ";
     }
     
     // ตรวจสอบว่ามีข้อมูลผลการเรียนนี้อยู่แล้วหรือไม่
@@ -67,9 +67,9 @@ function addGrade($conn, $student_id, $subject_code, $study_year, $semester, $gr
                         AND semester = $semester";
         
         if ($conn->query($update_query) === TRUE) {
-            return "อัพเดทผลการเรียนเรียบร้อยแล้ว";
+            return "ອັບເດດຜົນການຮຽນຮຽບຮ້ອຍແລ້ວ";
         } else {
-            return "เกิดข้อผิดพลาดในการอัพเดทข้อมูล: " . $conn->error;
+            return "ເກີດຂໍ້ຜິດພາດໃນການອັບເດດຂໍ້ມູນ: " . $conn->error;
         }
     } else {
         // ถ้ายังไม่มีข้อมูล ให้เพิ่มใหม่
@@ -77,9 +77,9 @@ function addGrade($conn, $student_id, $subject_code, $study_year, $semester, $gr
                         VALUES ('$student_id', '$subject_code', $study_year, $semester, '$grade')";
         
         if ($conn->query($insert_query) === TRUE) {
-            return "เพิ่มผลการเรียนเรียบร้อยแล้ว";
+            return "ເພີ່ມຜົນການຮຽນຮຽບຮ້ອຍແລ້ວ";
         } else {
-            return "เกิดข้อผิดพลาดในการเพิ่มข้อมูล: " . $conn->error;
+            return "ເກີດຂໍ້ຜິດພາດໃນການອັບເດດຂໍ້ມູນ: " . $conn->error;
         }
     }
 }
@@ -118,18 +118,18 @@ function bulkAddGrades($conn, $student_ids, $subject_code, $study_year, $semeste
         if (!empty($student_id) && !empty($grade)) {
             $result = addGrade($conn, $student_id, $subject_code, $study_year, $semester, $grade);
             
-            if (strpos($result, "เรียบร้อยแล้ว") !== false) {
+            if (strpos($result, "ຮຽບຮ້ອຍແລ້ວ") !== false) {
                 $success_count++;
             } else {
-                $error_messages[] = "นักศึกษารหัส $student_id: $result";
+                $error_messages[] = "ນັກສຶກສາລະຫັດ $student_id: $result";
             }
         }
     }
     
     if (empty($error_messages)) {
-        return "เพิ่มผลการเรียนเรียบร้อยแล้ว $success_count รายการ";
+        return "ເພີ່ມຜົນການຮຽນຮຽບຮ້ອຍ $success_count ລາຍການ";
     } else {
-        return "เพิ่มผลการเรียนเรียบร้อยแล้ว $success_count รายการ แต่มีบางรายการที่มีข้อผิดพลาด: " . implode(", ", $error_messages);
+        return "ເພີ່ມຜົນການຮຽນຮຽບຮ້ອຍ $success_count ລາຍການ ແຕ່ມີບາງລາຍການເກີດຂໍ້ຜິດພາດ: " . implode(", ", $error_messages);
     }
 }
 
@@ -151,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         $result = addGrade($conn, $student_id, $subject_code, $study_year, $semester, $grade);
         
-        if (strpos($result, "เกิดข้อผิดพลาด") !== false) {
+        if (strpos($result, "ເກິດຂໍ້ຜິດພາດ") !== false) {
             $error = $result;
         } else {
             $message = $result;
@@ -165,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         $result = bulkAddGrades($conn, $student_ids, $subject_code, $study_year, $semester, $grades);
         
-        if (strpos($result, "เกิดข้อผิดพลาด") !== false) {
+        if (strpos($result, "ເກິດຂໍ້ຜິດພາດ") !== false) {
             $error = $result;
         } else {
             $message = $result;
@@ -175,15 +175,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $grade = clean($conn, $_POST['grade']);
         
         if (updateGrade($conn, $grade_id, $grade)) {
-            $message = "แก้ไขผลการเรียนเรียบร้อยแล้ว";
+            $message = "ແກ້ໄຂຜົນການຮຽນແລ້ວ";
         } else {
-            $error = "เกิดข้อผิดพลาดในการแก้ไขข้อมูล: " . $conn->error;
+            $error = "ເກີດຂໍ້ຜິດພາດໃນການສະແດງຜົນຂໍ້ມູນ: " . $conn->error;
         }
     } elseif (isset($_POST['delete_grade'])) {
         $grade_id = intval($_POST['grade_id']);
         
         if (deleteGrade($conn, $grade_id)) {
-            $message = "ลบผลการเรียนเรียบร้อยแล้ว";
+            $message = "ລົບຜົນການຮຽນແລ້ວ";
             // รีไดเร็กต์กลับไปหน้ารายการหรือหน้าข้อมูลนักศึกษา
             if (!empty($_POST['return_url'])) {
                 header("Location: " . $_POST['return_url'] . "&deleted=1");
@@ -193,7 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit();
             }
         } else {
-            $error = "เกิดข้อผิดพลาดในการลบข้อมูล: " . $conn->error;
+            $error = "ເກີດຂໍ້ຜິດພາດໃນການລົບຜົນການຮຽນ : " . $conn->error;
         }
     }
 }
@@ -211,7 +211,7 @@ if ($action === 'edit' && $grade_id > 0) {
     if ($edit_result->num_rows > 0) {
         $edit_data = $edit_result->fetch_assoc();
     } else {
-        $error = "ไม่พบข้อมูลผลการเรียนที่ต้องการแก้ไข";
+        $error = "ບໍ່ພົບຂໍໍາລົບຜົນການຮຽນທີ່ຕ້ອງການແກ້ໄຂ້";
     }
 }
 
@@ -527,7 +527,7 @@ if ($years_result && $years_result->num_rows > 0) {
                                 <option value="">-- ເລືອກວິຊາ --</option>
                                 <?php foreach ($subjects as $subject): ?>
                                 <option value="<?php echo $subject['subject_code']; ?>">
-                                    <?php echo $subject['subject_code'] . ' - ' . $subject['subject_name'] . ' (' . $subject['credit'] . ' หน่วยกิต)'; ?>
+                                    <?php echo $subject['subject_code'] . ' - ' . $subject['subject_name'] . ' (' . $subject['credit'] . ' ໜ່ວຍກິດ)'; ?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>
@@ -744,7 +744,7 @@ if ($years_result && $years_result->num_rows > 0) {
                     </div>
                     <div class="col-md-6">
                         <p><strong>ພາກວິຊາ:</strong> <?php echo $student_data['major_name']; ?></p>
-                        <p><strong>ສະຖານະ:</strong> <?php echo ($student_data['status'] == 'studying') ? 'ກຳລັງສຶກສາ' : (($student_data['status'] == 'graduated') ? 'จบการศึกษา' : 'พ้นสภาพ'); ?></p>
+                        <p><strong>ສະຖານະ:</strong> <?php echo ($student_data['status'] == 'studying') ? 'ກຳລັງສຶກສາ' : (($student_data['status'] == 'graduated') ? 'ຈົບການສຶກສາ' : 'ໝົດສິດໃນການສຶກສາ'); ?></p>
                     </div>
                 </div>
                 
@@ -828,7 +828,7 @@ if ($years_result && $years_result->num_rows > 0) {
                                                     <p>ທ່ານຕ້ອງການລົບ <strong><?php echo $grade['subject_code'] . ' - ' . $grade['subject_name']; ?></strong> ເກຣດ <strong><?php echo $grade['grade']; ?></strong> ຫຼື ບໍ່?</p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ຍົກເລີກ</button>
                                                     <form method="POST" action="">
                                                         <input type="hidden" name="grade_id" value="<?php echo $grade['grade_id']; ?>">
                                                         <input type="hidden" name="return_url" value="admin_grades.php?student_id=<?php echo $student_data['student_id']; ?>">
